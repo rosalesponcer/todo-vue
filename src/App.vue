@@ -1,8 +1,13 @@
 <template lang="pug">
 .container
-	item-form(@add-todo="onAddTodo")
-	.box(v-for="(item, index) in items")
-		item-list(:key="item._id", :content="item.content", :title="item.title", :tags="item.tags")
+	item-form(@add-todo='onAddTodo')
+	.box(v-for='(item, index) in items')
+		item-list(
+			:key='item._id',
+			:content='item.content',
+			:title='item.title',
+			:tags='item.tags'
+		)
 </template>
 
 <script>
@@ -11,12 +16,13 @@ import ItemForm from './components/ItemForm.vue';
 
 import { ITEMS } from './constants/Data';
 import { reactive } from '@vue/reactivity';
+import { Storage } from './core/LocalSorage';
 
 export default {
 	name: 'App',
 	components: {
 		ItemList,
-		ItemForm,
+		ItemForm
 	},
 	methods: {
 		onAddTodo(todo) {
@@ -24,13 +30,21 @@ export default {
 			todo = { ...todo, _id: Math.floor(Math.random() * 100000) };
 
 			this.items.unshift(todo);
-		},
+			Storage.set(this.items);
+		}
 	},
 	setup() {
-		const items = reactive(ITEMS);
+		let ItemList = Storage.get();
+
+		if (!ItemList) {
+			Storage.set(ITEMS);
+			ItemList = ITEMS;
+		}
+
+		const items = reactive(ItemList);
 
 		return { items };
-	},
+	}
 };
 </script>
 
