@@ -1,23 +1,35 @@
 <template lang="pug">
 .container
+	item-form(@add-todo="onAddTodo")
 	.box(v-for="(item, index) in items")
-		item-list(:key="item._id", :content="item.content", :title="item.title")
+		item-list(:key="item._id", :content="item.content", :title="item.title", :tags="item.tags")
 </template>
 
 <script>
-import ItemList from "./components/ItemList.vue";
+import ItemList from './components/ItemList.vue';
+import ItemForm from './components/ItemForm.vue';
 
-import { ITEMS } from "./constants/Data";
+import { ITEMS } from './constants/Data';
+import { reactive } from '@vue/reactivity';
 
 export default {
-	name: "App",
+	name: 'App',
 	components: {
 		ItemList,
+		ItemForm,
 	},
-	data() {
-		return {
-			items: ITEMS,
-		};
+	methods: {
+		onAddTodo(todo) {
+			console.log(todo);
+			todo = { ...todo, _id: Math.floor(Math.random() * 100000) };
+
+			this.items.unshift(todo);
+		},
+	},
+	setup() {
+		const items = reactive(ITEMS);
+
+		return { items };
 	},
 };
 </script>

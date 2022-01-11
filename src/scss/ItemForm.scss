@@ -1,0 +1,25 @@
+.item-form {
+	width: 400px;
+
+	padding: 20px 10px;
+	margin: auto;
+
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-radius: 10px;
+
+	.control {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		padding-block: 10px;
+
+		&__name {
+			flex-grow: 1;
+		}
+
+		&__input {
+			width: 250px;
+		}
+	}
+}
