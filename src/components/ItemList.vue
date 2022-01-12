@@ -1,12 +1,21 @@
 <template lang="pug">
-.item-list
-	h1.item-list__title {{ title }}
+article.item-list
+	header
+		h1.item-list__title {{ title }}
+
+		.actions
+			button.action(@click='onAction("edit")')
+				i.fas.fa-pen
+
+			button.action.secondary(@click='onAction("remove")')
+				i.fas.fa-trash
 
 	.item-list__container
 		p.content {{ content }}
 
-	.tags
-		span.tags__item(v-for='(tag, index) in tags', :key='index') {{ tag }}
+	footer(v-if='tags.length')
+		.tags
+			span.tags__item(v-for='(tag, index) in tags', :key='index') {{ tag }}
 </template>
 
 <script>
@@ -26,6 +35,11 @@ export default {
 			default() {
 				return [];
 			}
+		}
+	},
+	methods: {
+		onAction(action) {
+			this.$emit('on-action', action);
 		}
 	}
 };

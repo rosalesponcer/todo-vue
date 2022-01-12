@@ -1,14 +1,29 @@
 <template lang="pug">
-form.item-form(@submit.prevent='onSubmit')
-	.control
-		label.control__name Title
-		input.control__input(type='text', v-model='title')
+article
+	header
+		h1.title AGREGAR TODO
 
-	.control
-		label.control__name Content
-		input.control__input(type='textarea', v-model='content')
+	form.item-form(@submit.prevent='onSubmit')
+		.control
+			label.control__name Titulo
+			input.control__input(
+				type='text',
+				v-model='title',
+				placeholder='Ingrese Título'
+			)
 
-	input.btn(type='submit', value='send')
+		.control
+			label.control__name Contenido
+			textarea.control__input(
+				v-model='content',
+				resizable='false',
+				rows='4',
+				cols='50',
+				placeholder='Ingrese Contenido'
+			)
+
+		//- input.btn(type='submit', value='Guardar')
+		button.submit(type='submit', :disabled='!(content && title)') Guardar
 </template>
 
 <script>
@@ -28,6 +43,9 @@ export default {
 			};
 
 			if (todo.title && todo.content) this.$emit('add-todo', todo);
+
+			this.title = '';
+			this.content = '';
 		}
 	}
 };
