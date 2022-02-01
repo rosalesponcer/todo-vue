@@ -14,10 +14,10 @@
 </template>
 
 <script>
+import { reactive } from '@vue/reactivity';
+
 import ItemList from './components/ItemList.vue';
 import ItemForm from './components/ItemForm.vue';
-
-import { reactive } from '@vue/reactivity';
 
 import { Storage } from './core/LocalSorage';
 import { ITEMS } from './constants/Data';
@@ -31,8 +31,6 @@ export default {
 
 	methods: {
 		onAddTodo(todo) {
-			console.log(todo);
-
 			todo = {
 				...todo,
 				_id: Math.floor(Math.random() * 100000)
@@ -42,8 +40,6 @@ export default {
 			Storage.set(this.items);
 		},
 		selectAction(action, item) {
-			console.log({ action, item });
-
 			if (action === 'remove') remove(item, this.items);
 		}
 	},
